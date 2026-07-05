@@ -3,6 +3,7 @@
 <?php if (!empty($errors['general'])): ?><div class="flash-error"><?= e($errors['general']) ?></div><?php endif; ?>
 
 <form method="POST" action="/orders/store">
+    <?= csrf_field() ?>
     <label>Order code</label>
     <input type="text" name="order_code" value="<?= old($old, 'order_code') ?>">
     <?php if (!empty($errors['order_code'])): ?><div class="field-error"><?= e($errors['order_code']) ?></div><?php endif; ?>

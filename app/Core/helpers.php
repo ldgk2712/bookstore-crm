@@ -103,3 +103,34 @@ function log_error(string $message): void
     $line = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
     @file_put_contents(__DIR__ . '/../../storage/logs/app.log', $line, FILE_APPEND);
 }
+
+/**
+ * Lấy CSRF token của session hiện tại, tự sinh nếu chưa có.
+ * Token dùng chung cho cả session (không đổi mỗi request) để tránh việc mở
+ * nhiều tab/form cùng lúc bị lỗi "token cũ" khi submit form mở trước đó.
+ */
+function csrf_token(): string
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/** In ra input ẩn chứa CSRF token, dùng trong mọi <form method="POST">. */
+function csrf_field(): string
+{
+    return '<input type="hidden" name="csrf_token" value="' . e(csrf_token()) . '">';
+}
+
+/**
+ * Kiểm tra CSRF token gửi lên trong $_POST có khớp với token của session không.
+ * Dùng hash_equals() thay vì === để tránh timing attack.
+ */
+function verify_csrf(): bool
+{
+    $submitted = $_POST['csrf_token'] ?? '';
+    $expected  = $_SESSION['csrf_token'] ?? '';
+
+    return $expected !== '' && hash_equals($expected, $submitted);
+}

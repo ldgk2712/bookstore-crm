@@ -9,6 +9,7 @@
 <?php endif; ?>
 
 <form method="POST" action="/login">
+    <?= csrf_field() ?>
     <label>Email</label>
     <input type="email" name="email" value="<?= old($old, 'email') ?>" required>
 

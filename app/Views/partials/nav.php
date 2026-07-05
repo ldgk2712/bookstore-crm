@@ -5,6 +5,7 @@
         <a href="/orders">Orders</a>
         <a href="/inquiries/create">Public Inquiry Form</a>
         <form action="/logout" method="POST" style="display:inline">
+            <?= csrf_field() ?>
             <button type="submit" style="background:none;border:none;color:#fff;cursor:pointer;padding:0;margin-left:16px;">Logout</button>
         </form>
     <?php else: ?>

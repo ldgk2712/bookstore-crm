@@ -6,6 +6,7 @@
 
 <form method="POST" action="/inquiries/store">
     <!-- Honeypot: field ẩn, người dùng thật sẽ không thấy/không điền. Bot thường tự động điền hết field. -->
+    <?= csrf_field() ?>
     <div class="honeypot-field" aria-hidden="true">
         <label>Website</label>
         <input type="text" name="website" tabindex="-1" autocomplete="off">

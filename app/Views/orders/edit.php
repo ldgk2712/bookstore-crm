@@ -3,6 +3,7 @@
 <?php if (!empty($errors['general'])): ?><div class="flash-error"><?= e($errors['general']) ?></div><?php endif; ?>
 
 <form method="POST" action="/orders/update">
+    <?= csrf_field() ?>
     <input type="hidden" name="id" value="<?= e((string) $order['id']) ?>">
 
     <label>Order code</label>
@@ -40,6 +41,7 @@
 </form>
 
 <form method="POST" action="/orders/delete" style="margin-top:8px;" onsubmit="return confirm('Xoá đơn hàng này?');">
+    <?= csrf_field() ?>
     <input type="hidden" name="id" value="<?= e((string) $order['id']) ?>">
     <button type="submit" class="btn-danger">Delete</button>
 </form>

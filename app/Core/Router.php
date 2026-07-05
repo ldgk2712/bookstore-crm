@@ -30,6 +30,14 @@ class Router
         }
 
         if (isset($this->routes[$method][$path])) {
+            // Chặn CSRF cho MỌI request POST trước khi vào Controller.
+            // Đặt ở đây (1 chỗ duy nhất) thay vì lặp lại trong từng Controller.
+            if ($method === 'POST' && !verify_csrf()) {
+                http_response_code(403);
+                render('errors/403', ['title' => '403 Forbidden']);
+                return;
+            }
+
             [$controllerClass, $action] = $this->routes[$method][$path];
             $controller = $container[$controllerClass] ?? new $controllerClass();
             $controller->$action();
