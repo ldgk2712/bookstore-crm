@@ -1,7 +1,6 @@
 <?php
 
 /**
- * public/index.php
  * Front Controller: MỌI request đều đi qua file này (xem cấu hình .htaccess / router PHP built-in).
  */
 

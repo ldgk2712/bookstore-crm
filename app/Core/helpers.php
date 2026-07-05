@@ -1,5 +1,4 @@
 <?php
-// app/Core/helpers.php
 
 /** Escape output an toàn để chống XSS. Mọi dữ liệu từ DB/user in ra View phải qua e(). */
 function e(?string $value): string

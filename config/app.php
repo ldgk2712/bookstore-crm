@@ -1,5 +1,4 @@
 <?php
-// config/app.php
 // Đổi debug = false khi deploy production để không lộ SQLSTATE/stack trace.
 
 return [

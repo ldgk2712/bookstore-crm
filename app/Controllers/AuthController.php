@@ -52,15 +52,19 @@ class AuthController
 
     public function logout(): void
     {
-        // Logout sạch: xoá toàn bộ dữ liệu session, xoá cookie session, destroy session.
+        // Xoá sạch dữ liệu session hiện tại và huỷ session cũ trên server.
         $_SESSION = [];
-
-        if (ini_get('session.use_cookies')) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $params['path']);
-        }
-
         session_destroy();
+
+        // Bắt đầu 1 session hoàn toàn mới rồi bắt buộc đổi sang session ID mới
+        // (session_regenerate_id sẽ tự gửi Set-Cookie mới cho trình duyệt).
+        // Nếu không làm bước này, PHP sẽ cố dùng lại session ID cũ (đã bị destroy)
+        // vì $_COOKIE vẫn còn giữ giá trị cũ, khiến flash message bên dưới bị mất.
+        session_start();
+        session_regenerate_id(true);
+
+        flash('success', 'Bạn đã đăng xuất thành công.');
+
         redirect('/login');
     }
 }

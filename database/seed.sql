@@ -1,4 +1,3 @@
--- database/seed.sql
 USE bookstore_crm;
 
 -- Tài khoản demo: admin@example.com / 123456
